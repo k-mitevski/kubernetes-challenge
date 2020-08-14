@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: challenge-deployment
+  labels:
+    app: lk8s
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: lk8s
+  template:
+    metadata:
+      labels:
+        app: lk8s
+    spec:
+      containers:
+      - name: lk8s
+        image: lk8s:1.0
+        ports:
+        - containerPort: 4000
+        imagePullPolicy: Never
+        env:
+          - name: NAME
+            valueFrom:
+              configMapKeyRef:
+                name: challenge-config
+                key: Name
